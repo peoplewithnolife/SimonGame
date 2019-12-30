@@ -11,6 +11,13 @@ function resetGame() {
     nextSequence();
 }
 
+function startOver() {
+   gameStarted = false;
+   level = 0;
+   userClickedPattern = [];
+   gamePattern = [];
+}
+
 $(document).keydown(function () {
     if (gameStarted === false) {
         resetGame();
@@ -42,7 +49,12 @@ function checkAnswer(currentLevel) {
        }
     }
     else {
-        resetGame();
+            var failSound = new Audio("sounds/wrong.mp3");
+            failSound.play();
+            $("body").addClass("game-over");
+            setTimeout(function () { $("body").removeClass("game-over"); }, 200);
+            $("#level-title").text("Game over (you loser) Press Any Key to Restart");
+            startOver();
         console.log("FAIL");
     }
 }
